@@ -6,17 +6,20 @@ From: ubuntu:18.04
     apt update -y
 
     # Install various softwares
-    curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-    apt install -y build-essential zlib1g zlib1g-dev wget apache2 nodejs
+    apt install -y build-essential zlib1g zlib1g-dev curl git libbio-featureio-perl
+    curl -sL https://deb.nodesource.com/setup_14.x | bash -
+    apt install -y nodejs
 
     # Download JBrowse
-    https://github.com/GMOD/jbrowse/releases/download/1.16.9-release/JBrowse-1.16.9.zip
+    curl -L -o JBrowse-1.16.9.tgz https://github.com/GMOD/jbrowse/archive/1.16.9-release.tar.gz
     
     # Install JBrowse
-    unzip chromonomer-1.11.tar.gz
-    cd JBrowse-1.16.9
-    ./setup
-    npm run start
+    tar -xf JBrowse-1.16.9.tgz
+    mkdir -p /var/www/html/
+    mv jbrowse-1.16.9-release /var/www/html/jbrowse
+    cd /var/www/html/jbrowse
+    npm install
+    ./setup.sh
 
     # Set build date
     NOW=$(date)
